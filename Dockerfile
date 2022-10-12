@@ -1,16 +1,25 @@
-FROM golang:1.14.8-stretch as build
-LABEL maintainer="Infinity Works"
+FROM 288840537196.dkr.ecr.eu-west-1.amazonaws.com/golang:1.19.2-alpine3.16 AS build
+LABEL maintainer="Form3"
 
 ENV GO111MODULE=on
 
-COPY ./ /go/src/github.com/infinityworks/github-exporter
-WORKDIR /go/src/github.com/infinityworks/github-exporter
+COPY ./ /app
+WORKDIR /app
 
-RUN go mod download \
-    && go test ./... \
-    && CGO_ENABLED=0 GOOS=linux go build -o /bin/main
+COPY form3-palo-alto.crt /usr/local/share/ca-certificates/form3-palo-alto.crt
+# hadolint ignore=DL3018
+RUN apk --no-cache add ca-certificates git && update-ca-certificates
 
-FROM alpine:3.11.3
+ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+ENV AWS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+
+RUN GOPROXY=direct go mod download \
+    && CGO_ENABLED=0 go test ./... \
+    && GOOS=linux CGO_ENABLED=0 go build -o /bin/main
+
+FROM 288840537196.dkr.ecr.eu-west-1.amazonaws.com/alpine:3.14.0
 
 RUN apk --no-cache add ca-certificates \
      && addgroup exporter \

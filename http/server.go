@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/infinityworks/github-exporter/exporter"
+	"github.com/form3tech-oss/github-exporter/exporter"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"

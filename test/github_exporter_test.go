@@ -2,9 +2,9 @@ package test
 
 import (
 	"fmt"
-	"github.com/infinityworks/github-exporter/config"
-	"github.com/infinityworks/github-exporter/exporter"
-	web "github.com/infinityworks/github-exporter/http"
+	"github.com/form3tech-oss/github-exporter/config"
+	"github.com/form3tech-oss/github-exporter/exporter"
+	web "github.com/form3tech-oss/github-exporter/http"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/steinfletcher/apitest"
 	"io/ioutil"
