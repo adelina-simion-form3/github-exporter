@@ -10,5 +10,5 @@ services:
       - 9171:9171
     image: infinityworks/github-exporter:latest
     environment:
-      - REPOS=<REPOS you want to monitor>
-      - GITHUB_TOKEN=<your github api token>
+      - ORGS=form3tech-oss
+      - GITHUB_TOKEN=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
