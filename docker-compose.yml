@@ -8,7 +8,6 @@ services:
       - 9171
     ports:
       - 9171:9171
-    image: infinityworks/github-exporter:latest
+    build: .
     environment:
       - ORGS=form3tech-oss
-      - GITHUB_TOKEN=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
